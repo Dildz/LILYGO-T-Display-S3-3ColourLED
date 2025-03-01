@@ -2,21 +2,25 @@
  
  Description:
    This code controls a three-colour (RGB) LED connected to a LilyGO T-Display-S3 microcontroller board.
+   
    It displays operating mode, colour changes, and button presses directly on the built-in screen using
-    the TFT_eSPI library.
+   the TFT_eSPI library.
+   
    The project demonstrates embedded programming concepts, including:
-     - Digital Outputs: Controlling the RGB LED by setting the state of GPIO pins.
-     - Variables: Storing and manipulating data, such as the current LED colour.
-     - Enumerations (Enums): Defining named constants for colors and operational modes,
-        improving code readability.
-     - Functions: Place code into reusable blocks for better organization and modularity.
-     - State Machines: Implementing different operational modes (automatic or manual colour changes)
-        based on the program's current state.
-     - Button Handling: Using the OneButton library to manage button short and long presses for
-        responsive user interaction.
-     - TFT_eSPI Library: Utilising the TFT_eSPI graphics library for direct display control.
+
+   - Digital Outputs: Controlling the RGB LED by setting the state of GPIO pins.
+   - Variables: Storing and manipulating data, such as the current LED colour.
+   - Enumerations (Enums): Defining named constants for colors and operational modes,
+     improving code readability.
+   - Functions: Place code into reusable blocks for better organization and modularity.
+   - State Machines: Implementing different operational modes (automatic or manual colour changes)
+     based on the program's current state.
+   - Button Handling: Using the OneButton library to manage button short and long presses for
+     responsive user interaction.
+   - TFT_eSPI Library: Utilising the TFT_eSPI graphics library for direct display control.
  
  How It Works:
+
    1. RGB LED Control: The code manages an RGB LED, capable of producing Red, Green, Blue, Yellow,
        Magenta, Cyan, and White by combining RGB colours.
    2. Automatic Mode: The LED cycles through colors automatically, changing every second.
