@@ -66,7 +66,6 @@
 
 #include "helper_functions.h" // include the helper functions
 
-
 // OneButton link
 OneButton keyButton(BUTTON_PIN, true); // button object
 
@@ -91,15 +90,18 @@ void setup() {
   // Set the button pin as input with pullup resistor
   pinMode(BUTTON_PIN, INPUT_PULLUP); // active LOW (HIGH when not pressed)
 
-  // Initialize the LED to the starting colour.
+  // Initialize the LED to the starting colour
   setLEDColour(currentColour);
 
   // TFT_eSPI setup
   tft.init();
   tft.setRotation(0); // adjust rotation (0 & 2 portrait | 1 & 3 landscape)
   tft.fillScreen(TFT_BLACK);
-  tft.setTextFont(2); // set the font (you can experiment with different fonts)
+  tft.setTextFont(2); // set the font size
   tft.setTextColor(TFT_WHITE, TFT_BLACK); // set text colour (white) and background colour (black)
+
+  // Draw static elements once
+  drawStaticElements(tft);
 
   // Set up button event handlers
   keyButton.attachClick(onShortPress);
@@ -132,9 +134,9 @@ void loop() {
       break;
   }
 
-  displayStatus(tft); // only update the display if something has changed
-
-  if (currentState == State::Colour_CHANGE_AUTO) {
-    updateAutoColour();
+  // Update the display if something has changed
+  if (redrawDisplay) {
+    updateDynamicElements(tft);
+    redrawDisplay = false; // reset the flag
   }
 }

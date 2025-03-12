@@ -5,6 +5,7 @@
 #ifndef HELPER_FUNCTIONS_H
 #define HELPER_FUNCTIONS_H
 
+#include <TFT_eSPI.h>
 
 // Define the state machine colour states
 enum class LEDColour {
@@ -106,28 +107,45 @@ void updateAutoColour() {
   }
 }
 
-// Function to display status information
-void displayStatus(TFT_eSPI &tft) {
-  static bool lastButtonState = !buttonPressed; // initialize to a different state to force update
+// Function to draw static elements on the TFT screen
+void drawStaticElements(TFT_eSPI &tft) {
+  tft.fillScreen(TFT_BLACK);              // clear the screen
+  tft.setTextFont(2);                     // set the font size
+  tft.setTextColor(TFT_WHITE, TFT_BLACK); // set text color and background
 
-  if (redrawDisplay || lastButtonState != buttonPressed) {
-    tft.fillScreen(TFT_BLACK);
-    tft.setCursor(0, 0);
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
-    
-    tft.println("Current State:");
-    tft.println((currentState == State::Colour_CHANGE_AUTO) ? "AUTO MODE" : "MANUAL MODE");
+  // Draw static text or elements
+  tft.setCursor(0, 0);
+  tft.println("---------------------------");
+  tft.println("  3-Colour LED Control");
+  tft.println("---------------------------");
+  tft.setCursor(0, 70);
+  tft.print("Mode: ");
+  tft.setCursor(0, 100);
+  tft.print("Colour: ");
+  tft.setCursor(0, 130);
+  tft.print("Button: ");
+}
 
-    tft.println("\nCurrent Colour:");
-    const char* colourNames[] = {"RED", "GREEN", "BLUE", "YELLOW", "MAGENTA", "CYAN", "WHITE"};
-    tft.println(colourNames[static_cast<int>(currentColour)]);
+// Function to update dynamic elements on the TFT screen
+void updateDynamicElements(TFT_eSPI &tft) {
+  // Update the mode (Auto/Manual)
+  tft.setCursor(50, 70);
+  tft.print("                "); // clear previous text
+  tft.setCursor(50, 70);
+  tft.print(currentState == State::Colour_CHANGE_AUTO ? "AUTO MODE" : "MANUAL MODE");
 
-    tft.println("\nButton State:");
-    tft.println(buttonPressed ? "PRESSED" : "NOT PRESSED");
+  // Update the current LED colour
+  tft.setCursor(50, 100);
+  tft.print("                "); // clear previous text
+  tft.setCursor(50, 100);
+  const char* colourNames[] = {"RED", "GREEN", "BLUE", "YELLOW", "MAGENTA", "CYAN", "WHITE"};
+  tft.print(colourNames[static_cast<int>(currentColour)]);
 
-    redrawDisplay = false;
-    lastButtonState = buttonPressed;
-  }
+  // Update the button state
+  tft.setCursor(50, 130);
+  tft.print("                "); // clear previous text
+  tft.setCursor(50, 130);
+  tft.print(buttonPressed ? "PRESSED" : "NOT PRESSED");
 }
 
 // Button event handlers
